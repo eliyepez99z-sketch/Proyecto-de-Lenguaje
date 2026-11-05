@@ -1,0 +1,17 @@
+meta {
+  name: Listar Asignaturas
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/asignaturas
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Lista obtenida", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

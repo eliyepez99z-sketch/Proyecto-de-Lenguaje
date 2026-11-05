@@ -1,0 +1,34 @@
+meta {
+  name: Crear Asignatura
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/asignaturas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "codigo": "MAT101",
+    "nombre": "Cálculo I",
+    "creditos": 4,
+    "limiteInasistenciaPct": 25,
+    "tardanzasPorAusencia": 3
+  }
+}
+
+script:post-response {
+  // Guarda el ID creado para Buscar, Actualizar y Eliminar
+  if (res.body && res.body.id !== undefined) {
+    bru.setVar("asignaturaId", res.body.id);
+  }
+}
+
+tests {
+  test("Asignatura creada", function () {
+    expect(res.getStatus()).to.be.oneOf([200, 201]);
+  });
+}

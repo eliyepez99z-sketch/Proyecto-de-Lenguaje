@@ -1,0 +1,17 @@
+meta {
+  name: Buscar Asignatura por ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/asignaturas/{{asignaturaId}}
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Asignatura encontrada", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

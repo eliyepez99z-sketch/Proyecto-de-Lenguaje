@@ -1,0 +1,33 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "admin@iunav.edu.ve",
+    "rol": "ADMIN"
+  }
+}
+
+script:post-response {
+  // Guarda el token para que las demás peticiones lo hereden (auth: inherit)
+  const token = res.body.access_token || res.body.accessToken || res.body.token;
+  if (token) {
+    bru.setVar("token", token);
+  }
+}
+
+tests {
+  test("Login devuelve un token", function () {
+    expect(res.getStatus()).to.be.oneOf([200, 201]);
+    expect(bru.getVar("token")).to.be.a("string");
+  });
+}

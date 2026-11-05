@@ -1,0 +1,17 @@
+meta {
+  name: Eliminar Asignatura
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/asignaturas/{{asignaturaId}}
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Asignatura eliminada", function () {
+    expect(res.getStatus()).to.be.oneOf([200, 204]);
+  });
+}
