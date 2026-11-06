@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // Ajusta los nombres de los claims a lo que emita tu Proyecto 3
-  validate(payload: any) {
+    validate(payload: any) {
     return {
       usuarioExternoId: String(payload.sub ?? payload.id),
       email: payload.email,
