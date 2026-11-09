@@ -61,7 +61,7 @@ const handleLogin = async () => {
     $q.loading.show()
     await authStore.login(email.value, password.value)
     $q.notify({ type: 'positive', message: '¡Bienvenido!' })
-    router.push('/perfil') // Redirige a la página de perfil tras iniciar sesión
+    router.push('/perfil')
   } catch (error) {
     $q.notify({ type: 'negative', message: 'Credenciales inválidas o error de servidor' })
   } finally {
