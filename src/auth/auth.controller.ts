@@ -1,24 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 
-@Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(config: ConfigService) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: config.getOrThrow<string>('JWT_SECRET'),
-    });
-  }
+import { Controller, Get } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 
-  // Ajusta los nombres de los claims a lo que emita tu Proyecto 3
-    validate(payload: any) {
-    return {
-      usuarioExternoId: String(payload.sub ?? payload.id),
-      email: payload.email,
-      rol: String(payload.rol ?? payload.role ?? '').toLowerCase(),
-    };
+@ApiTags('Auth')
+@ApiBearerAuth()
+@Controller('auth')
+export class AuthController {
+  @Get('me')
+  me(@CurrentUser() user: any) {
+    return user;
   }
 }
